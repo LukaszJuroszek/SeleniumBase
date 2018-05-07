@@ -1,8 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace Pages
 {
@@ -12,6 +10,7 @@ namespace Pages
         {
             PageFactory.InitElements(driver, this);
         }
+
         //Menu
         [FindsBy(How = How.Id, Using = "treemenu")]
         private IWebElement _sideMenu;
@@ -19,6 +18,7 @@ namespace Pages
         //Menu InputForms sub categoryWait
         [FindsBy(How = How.CssSelector, Using = "#treemenu > li > ul > li:nth-child(1) > a")]
         private IWebElement _inputForms;
+
         //Input Form sub category-simple From demo 
         [FindsBy(How = How.CssSelector, Using = "#treemenu > li > ul > li:nth-child(1) > ul > li:nth-child(1) > a")]
         private IWebElement _inputFormsSimpleFormDemo;
@@ -36,6 +36,7 @@ namespace Pages
         //Input Form page/ Two Input Fields
         [FindsBy(How = How.Id, Using = "sum1")]
         private IWebElement _valueAInput;
+
         [FindsBy(How = How.Id, Using = "sum2")]
         private IWebElement _valueBInput;
 
@@ -52,9 +53,9 @@ namespace Pages
         //Single Checkbox Demo
         [FindsBy(How = How.Id, Using = "isAgeSelected")]
         private IWebElement _singeCheckBox;
+
         [FindsBy(How = How.Id, Using = "txtAge")]
         private IWebElement _messageElementAfterCheckBoxSelected;
-
 
         //Multiple Checkbox Demo
         [FindsBy(How = How.CssSelector, Using = ".cb1-element")]
@@ -166,7 +167,7 @@ namespace Pages
 
         public bool AreAllCheckboxesSelected(int expected)
         {
-              return AreAllCheckboxesSelected(_allOpinions,expected);
+            return AreAllCheckboxesSelected(_allOpinions, expected);
         }
 
         public SeleniumEasyPage ClickCheckUnCheckAll()

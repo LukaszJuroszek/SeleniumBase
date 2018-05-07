@@ -8,21 +8,14 @@ namespace Pages
 {
     public abstract class BasePage : IDisposable, IBasePage
     {
-        private readonly string _baseUrl;
-        private WebDriverWait _wait;
-        private IWebDriver _driver;
-
-        public IWebDriver Driver { get { return _driver; } set { _driver = value; } }
-
-        public string BaseUrl { get { return _baseUrl; } }
-
-        public WebDriverWait Wait { get { return _wait; } set { _wait = value; } }
-
+        public IWebDriver Driver { get; set; }
+        public string BaseUrl { get; }
+        public WebDriverWait Wait { get; set; }
         public string MainWindowHander { get; set; }
 
-        public BasePage(string baseUrl, IWebDriver driver, int timeToWait = 4)
+        protected BasePage(string baseUrl, IWebDriver driver, int timeToWait = 4)
         {
-            _baseUrl = baseUrl;
+            BaseUrl = baseUrl;
             Driver = driver;
             InitWebDriverWait(timeToWait);
             InitWindow();
@@ -30,7 +23,7 @@ namespace Pages
         }
 
         private void InitWindow()
-        {
+        {   //that dont work in chrome driver
             Driver.Manage().Window.Maximize();
         }
 
@@ -80,14 +73,14 @@ namespace Pages
 
         public void WtriteText(IWebElement element, string text)
         {
-            if (text == null || text == string.Empty)
+            if (string.IsNullOrEmpty(text))
                 throw new ArgumentException("text should be not null and empty");
             element.SendKeys(text);
         }
 
         public void TakeScreanShot()
         {
-            Screenshot ss = ((ITakesScreenshot)Driver).GetScreenshot();
+            var ss = ((ITakesScreenshot)Driver).GetScreenshot();
             var path = $"{AppDomain.CurrentDomain.BaseDirectory}{Guid.NewGuid()}.png";
             ss.SaveAsFile(path, ScreenshotImageFormat.Png);
         }
@@ -99,7 +92,7 @@ namespace Pages
             if (expected < 0)
                 throw new ArgumentException("expected should be greater or than 0");
             var actual = 0;
-            for (int i = 0; i < elementList.Count; i++)
+            for (var i = 0; i < elementList.Count; i++)
             {
                 actual += (elementList[i].Selected == true ? 1 : 0);
             }
@@ -108,7 +101,7 @@ namespace Pages
 
         public void SelectElementByText(SelectElement selectedElement, string text)
         {
-            if (text == null || text == string.Empty)
+            if (string.IsNullOrEmpty(text))
                 throw new ArgumentException("text should be not null and empty");
             selectedElement.SelectByText(text);
         }
@@ -152,7 +145,7 @@ namespace Pages
         public void SelectElementsByIndex(IWebElement element, IEnumerable<int> toSelect)
         {
             var selectList = new SelectElement(element);
-            foreach (int index in toSelect)
+            foreach (var index in toSelect)
             {
                 SelectElementByIndex(selectList, index);
             }

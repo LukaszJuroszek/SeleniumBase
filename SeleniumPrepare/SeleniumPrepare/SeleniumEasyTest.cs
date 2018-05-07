@@ -15,11 +15,11 @@ namespace SeleniumTests
             _page = new SeleniumEasyPage(@"http://www.seleniumeasy.com/test/", new ChromeDriver());
         }
 
-        [TestCase("Sample Message",TestName = "Message in ShowMessage Element shoud be Sample Message")]
-        [TestCase("Message",TestName = "Message in ShowMessage Element shoud be Message")]
-        [TestCase("!@#$$$$Sample Message",TestName = "Message in ShowMessage Element shoud be !@#$$$$Sample Message")]
-        [TestCase("___Message",TestName = "Message in ShowMessage Element shoud be___Message")]
-        [TestCase("asdasdSample Message",TestName = "Message in ShowMessage Element shoud be asdasdSample Message")]
+        [TestCase("Sample Message", TestName = "Message in ShowMessage Element shoud be Sample Message")]
+        [TestCase("Message", TestName = "Message in ShowMessage Element shoud be Message")]
+        [TestCase("!@#$$$$Sample Message", TestName = "Message in ShowMessage Element shoud be !@#$$$$Sample Message")]
+        [TestCase("___Message", TestName = "Message in ShowMessage Element shoud be___Message")]
+        [TestCase("asdasdSample Message", TestName = "Message in ShowMessage Element shoud be asdasdSample Message")]
         [TestCase("-0ioakkka Message", TestName = "Message in ShowMessage Element shoud be -0ioakkka Message")]
         public void OpenMainPageAndClickInputFormAfterThatClickSimpleFormDemo(string message)
         {
@@ -32,7 +32,7 @@ namespace SeleniumTests
             Assert.AreEqual(message, actualMessage);
         }
 
-        [TestCase("1","2", "3",TestName = "1 plus 2 should return three")]
+        [TestCase("1", "2", "3", TestName = "1 plus 2 should return three")]
         [TestCase("121", "asd", "NaN", TestName = "121 plus asd should return NaN")]
         [TestCase("1asd", "2", "3", TestName = "1asd plus 2 should return 3")]
         [TestCase("asd", "2", "NaN", TestName = "asd plus 2 should return NaN")]
@@ -59,9 +59,10 @@ namespace SeleniumTests
                   .ClickInputFormsAndCheckboxDemoMenuItem()
                   .CickSingeCheckBox()
                   .IsSuccessMessageVisible();
-                 
+
             Assert.AreEqual(true, isVisible);
         }
+
         [TestCase]
         public void OpenMainPageAndClickInputFormAndClickCheckboxDemoMenuAndSelectAllCheckBoxInMultipleCheckboxDemo()
         {
@@ -73,13 +74,11 @@ namespace SeleniumTests
 
             Assert.AreEqual(true, areSelectedAllChcexbox);
         }
+
         [OneTimeTearDown]
         public void TearDown()
         {
-            if (_page != null)
-            {
-                _page.Dispose();
-            }
+            _page?.Dispose();
         }
     }
 }
