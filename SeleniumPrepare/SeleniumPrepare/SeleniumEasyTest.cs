@@ -12,7 +12,7 @@ namespace SeleniumTests
         [OneTimeSetUp]
         public void Initialize()
         {
-            _page = new SeleniumEasyPage(@"http://www.seleniumeasy.com/test/", new ChromeDriver());
+            _page = new SeleniumEasyPage(@"http://www.seleniumeasy.com/test/", driver: new ChromeDriver());
         }
 
         [TestCase("Sample Message", TestName = "Message in ShowMessage Element shoud be Sample Message")]

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Pages
         public WebDriverWait Wait { get; set; }
         public string MainWindowHander { get; set; }
 
-        protected BasePage(string baseUrl, IWebDriver driver, int timeToWait = 4)
+        protected BasePage(string baseUrl, IWebDriver driver, int timeToWait = 5)
         {
             BaseUrl = baseUrl;
             Driver = driver;
@@ -23,15 +24,24 @@ namespace Pages
         }
 
         private void InitWindow()
-        {   //that dont work in chrome driver
-            Driver.Manage().Window.Maximize();
+        {
+            if (Driver is ChromeDriver)
+            {
+
+            }
+            else
+            {
+                //that dont work in chrome driver
+                Driver.Manage().Window.Maximize();
+            }
+
         }
 
         private void InitWebDriverWait(int timeToWait)
         {
-            if (timeToWait <= 0)
-                throw new ArgumentException("timeToWait should be greater than 0");
-            Wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeToWait))
+            if (timeToWait < 4)
+                throw new ArgumentException($"invalid timeToWait... was {timeToWait}");
+            Wait = new WebDriverWait(Driver, timeout: TimeSpan.FromSeconds(timeToWait))
             {
                 PollingInterval = TimeSpan.FromMilliseconds(100)
             };
@@ -74,7 +84,7 @@ namespace Pages
         public void WtriteText(IWebElement element, string text)
         {
             if (string.IsNullOrEmpty(text))
-                throw new ArgumentException("text should be not null and empty");
+                throw new ArgumentException("text should be not null or empty");
             element.SendKeys(text);
         }
 
@@ -91,18 +101,14 @@ namespace Pages
         {
             if (expected < 0)
                 throw new ArgumentException("expected should be greater or than 0");
-            var actual = 0;
-            for (var i = 0; i < elementList.Count; i++)
-            {
-                actual += (elementList[i].Selected == true ? 1 : 0);
-            }
-            return actual == expected;
+            var result = elementList.Sum(x => x.Selected ? 1 : 0);
+            return result == expected;
         }
 
         public void SelectElementByText(SelectElement selectedElement, string text)
         {
             if (string.IsNullOrEmpty(text))
-                throw new ArgumentException("text should be not null and empty");
+                throw new ArgumentException("text should be not null or empty");
             selectedElement.SelectByText(text);
         }
 
@@ -136,7 +142,7 @@ namespace Pages
         public void SelectElementsByText(IWebElement element, IEnumerable<string> toSelect)
         {
             var selectList = new SelectElement(element);
-            foreach (string text in toSelect)
+            foreach (var text in toSelect)
             {
                 SelectElementByText(selectList, text);
             }
