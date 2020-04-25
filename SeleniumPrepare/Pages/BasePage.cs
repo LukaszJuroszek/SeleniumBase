@@ -25,16 +25,15 @@ namespace Pages
 
         private void InitWindow()
         {
+            //that dont work in chrome driver
             if (Driver is ChromeDriver)
             {
 
             }
             else
             {
-                //that dont work in chrome driver
                 Driver.Manage().Window.Maximize();
             }
-
         }
 
         private void InitWebDriverWait(int timeToWait)

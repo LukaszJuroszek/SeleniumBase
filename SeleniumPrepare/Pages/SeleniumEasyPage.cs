@@ -6,7 +6,10 @@ namespace Pages
 {
     public class SeleniumEasyPage : BasePage
     {
-        public SeleniumEasyPage(string baseUrl, IWebDriver driver, int timeToWait = 4) : base(baseUrl, driver, timeToWait)
+        private static readonly string _baseUrl = @"http://www.seleniumeasy.com/test/";
+
+        public SeleniumEasyPage(IWebDriver driver, int timeToWait = 4)
+            : base(baseUrl: _baseUrl, driver, timeToWait)
         {
             PageFactory.InitElements(driver, this);
         }
