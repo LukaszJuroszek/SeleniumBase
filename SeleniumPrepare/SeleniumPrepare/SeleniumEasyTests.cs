@@ -15,7 +15,7 @@ namespace SeleniumTests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            var gridUri = new Uri("http://192.168.102.214:4444/wd/hub");
+            var gridUri = new Uri("http://localhost:4444/wd/hub");
             var options = new ChromeOptions
             {
                 PlatformName = "Windows",
